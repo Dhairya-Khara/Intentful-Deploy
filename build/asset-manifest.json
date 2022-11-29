@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e5f70d44.css",
+    "main.js": "/static/js/main.dc2e8e0e.js",
+    "static/media/DhairyaPic.jpeg": "/static/media/DhairyaPic.4dddf284e71d6907d18d.jpeg",
+    "static/media/ChenikaPic.jpeg": "/static/media/ChenikaPic.c59d02d5a3db3cc249ae.jpeg",
+    "static/media/Intentful.png": "/static/media/Intentful.0538c660d69c7dbd5275.png",
+    "static/media/KrishnaPic.jpeg": "/static/media/KrishnaPic.2a575515efa8abd56602.jpeg",
+    "static/media/BerkePic.jpg": "/static/media/BerkePic.58da66f33e177972e316.jpg",
+    "static/media/AidanPic.jpeg": "/static/media/AidanPic.b120c3f90b0a15d66b16.jpeg",
+    "static/media/Kollektif.ttf": "/static/media/Kollektif.33fdfd1d0f21c0c8283b.ttf",
+    "static/media/Intentful2.png": "/static/media/Intentful2.4d31f4dc088a861f8dd7.png",
+    "static/media/fakeFeature.PNG": "/static/media/fakeFeature.70249cd8c4b368824381.PNG",
+    "static/media/fakeMain.PNG": "/static/media/fakeMain.241070faf9f2f06510ad.PNG",
+    "index.html": "/index.html",
+    "main.e5f70d44.css.map": "/static/css/main.e5f70d44.css.map",
+    "main.dc2e8e0e.js.map": "/static/js/main.dc2e8e0e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e5f70d44.css",
+    "static/js/main.dc2e8e0e.js"
+  ]
+}
