@@ -19,14 +19,14 @@ app.use(express.static(clientDirectory))
 
 
 //serving up build directory
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
     res.sendFile(path.join(clientDirectory, '/index.html'))
 });
 
 
 app.use(createUserController)
 app.use(loginUserController)
-app.use(uploadTranscriptController)``
+app.use(uploadTranscriptController)
 app.use(getIntentsController)
 app.use(getOneTranscriptIntentsController)
 app.use(getTranscriptsController)
