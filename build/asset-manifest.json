@@ -1,23 +1,27 @@
 {
   "files": {
-    "main.css": "/static/css/main.e5f70d44.css",
-    "main.js": "/static/js/main.dc2e8e0e.js",
+    "main.css": "/static/css/main.84446703.css",
+    "main.js": "/static/js/main.f9e7db8e.js",
+    "static/media/mainImg.gif": "/static/media/mainImg.8f34b69272cafc3018e5.gif",
+    "static/media/WorkSans-VariableFont_wght.ttf": "/static/media/WorkSans-VariableFont_wght.a334cdd18c435a867b49.ttf",
     "static/media/DhairyaPic.jpeg": "/static/media/DhairyaPic.4dddf284e71d6907d18d.jpeg",
     "static/media/ChenikaPic.jpeg": "/static/media/ChenikaPic.c59d02d5a3db3cc249ae.jpeg",
     "static/media/Intentful.png": "/static/media/Intentful.0538c660d69c7dbd5275.png",
     "static/media/KrishnaPic.jpeg": "/static/media/KrishnaPic.2a575515efa8abd56602.jpeg",
+    "static/media/vf.png": "/static/media/vf.e2c448c62520d5021f8d.png",
     "static/media/BerkePic.jpg": "/static/media/BerkePic.58da66f33e177972e316.jpg",
     "static/media/AidanPic.jpeg": "/static/media/AidanPic.b120c3f90b0a15d66b16.jpeg",
     "static/media/Kollektif.ttf": "/static/media/Kollektif.33fdfd1d0f21c0c8283b.ttf",
-    "static/media/Intentful2.png": "/static/media/Intentful2.4d31f4dc088a861f8dd7.png",
+    "static/media/Intentful3.png": "/static/media/Intentful3.ede7fd9e983378f78e3f.png",
+    "static/media/vis.png": "/static/media/vis.346ed822bb9d98b5c379.png",
     "static/media/fakeFeature.PNG": "/static/media/fakeFeature.70249cd8c4b368824381.PNG",
     "static/media/fakeMain.PNG": "/static/media/fakeMain.241070faf9f2f06510ad.PNG",
     "index.html": "/index.html",
-    "main.e5f70d44.css.map": "/static/css/main.e5f70d44.css.map",
-    "main.dc2e8e0e.js.map": "/static/js/main.dc2e8e0e.js.map"
+    "main.84446703.css.map": "/static/css/main.84446703.css.map",
+    "main.f9e7db8e.js.map": "/static/js/main.f9e7db8e.js.map"
   },
   "entrypoints": [
-    "static/css/main.e5f70d44.css",
-    "static/js/main.dc2e8e0e.js"
+    "static/css/main.84446703.css",
+    "static/js/main.f9e7db8e.js"
   ]
 }

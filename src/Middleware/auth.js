@@ -4,7 +4,7 @@ const User = require('../Entities/UserSchema')
 const auth = async (req, res, next) =>{
     try{
         const token = req.header('Authorization').replace('Bearer ', '')
-        const decoded = jwt.verify(token, process.env.JWT_TOKEN)
+        const decoded = jwt.verify(token, 'by order of the techy blinders')
         const user = await User.findOne({_id: decoded._id})
 
         if(!user){

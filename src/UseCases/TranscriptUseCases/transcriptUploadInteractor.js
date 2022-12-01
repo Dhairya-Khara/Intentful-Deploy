@@ -1,7 +1,25 @@
-const processTranscriptInteractor = require('./intentIdentifierInteractor')
+const processTranscriptInteractor = require('./transcriptProcessInteractor')
+const multiWOZconverter = require('./multiWOZconverter')
 
-const uploadTranscriptInteractor = async (user, file, filename) => {
-    if (user.transcripts === undefined || user.email === undefined) { throw new Error("Not a valid user") }
+
+/**
+ * Processes the transcript that the user has uploaded using 
+ * {@link transcriptProcessInteractor} Use Case, which identifies intents using
+ * {@link intentIdentifierInteractor} Use Case, and finally saves the transcript
+ * and the intents to the database.
+ * @interactor
+ * @param {mongoose.Schema} user - The current authorized user of the website
+ * @param {JSON} file - The JSON transcript file that the user has uploaded
+ * @param {String} filename - Name of the file the user has uploaded
+ */
+const transcriptUploadInteractor = async (user, file, filename) => {
+    //throw an error if not a valid user
+    if (user.transcripts === undefined || user.email === undefined) {
+        throw new Error("Not a valid user")
+    }
+
+    //make sure the name of the newly uploaded file doesn't exist in database
+    //i.e., make sure its name is unique
     let transcriptNames = []
     const existingTranscriptInfo = Object.entries(user.transcripts)
     try {
@@ -13,66 +31,62 @@ const uploadTranscriptInteractor = async (user, file, filename) => {
         throw new Error("Error in retrieving transcript names", e)
     }
 
+    //confirm the filename is unique, or send an error
     if (!transcriptNames.includes(filename)) {
-        await userSaveTranscriptAndIntents()
+        userSaveTranscriptAndIntents()
     }
-
     else {
         throw new Error("A transcript with the same name already exists")
     }
 
-
+    //use other use cases to identify intents and save the transcript and intents
     async function userSaveTranscriptAndIntents() {
-        try {
-            const json = JSON.parse(file)
-            let allCurrentIntents = new Map()
-            if (user.intents !== undefined) {
-                allCurrentIntents = new Map(Object.entries(user.intents))
-            }
+        //retrieve existing transcript information (i.e., identified intents)
+        const json = JSON.parse(file)
+        let convertedMultiWOZtoOrigList = multiWOZconverter(json);
+        let allCurrentIntents = new Map()
+        if (user.intents !== undefined) {
+            allCurrentIntents = new Map(Object.entries(user.intents))
+        }
 
-            //single transcript processing
-            let intentsForThisFile = processTranscriptInteractor(new Map(), [json])
+        for (let i = 0; i < convertedMultiWOZtoOrigList.length; i++) {
+            let currTranscript = convertedMultiWOZtoOrigList[i] // originally a string
+            currTranscript = JSON.parse(currTranscript) // now a JSON object
+
+            //single transcript processing; get intents in the newly uploaded files
+            let intentsForThisFile = processTranscriptInteractor(new Map(), [currTranscript])
 
             //multiple transcript processing
-            allCurrentIntents = processTranscriptInteractor(allCurrentIntents, [json])
+            allCurrentIntents = processTranscriptInteractor(allCurrentIntents, [currTranscript])
+            // console.log(allCurrentIntents)
 
-            addTranscriptToUser()
-            addIntentsToUser()
-            // just do one save: it will be obvious through the thrown errors if 
-            // there is an error in saving transcripts or intents
+            addTranscriptToUser(i, intentsForThisFile)
+            user.intents = allCurrentIntents  // overwrite user's intents with the current intents
+        }
+
+        try {
+            await user.save()
+        }
+        catch (e) {
+            throw new Error("Error in saving intents", e)
+        }
+
+        function addTranscriptToUser(i, intentsForThisFile) {
             try {
-                await user.save()
+                const obj = {}
+                let currTranscriptFilename = filename
+                if (i !== 0) {
+                    currTranscriptFilename = currTranscriptFilename + `_${i}`
+                }
+                obj[currTranscriptFilename] = file
+                obj["intents"] = intentsForThisFile
+                user.transcripts = user.transcripts.concat(obj)
             }
             catch (e) {
-                throw new Error("Error in saving intents", e)
+                throw new Error("Error in saving transcripts", e)
             }
-
-            function addIntentsToUser() {
-                try {
-                    user.intents = allCurrentIntents
-                    // await user.save()
-                }
-                catch (e) {
-                    throw new Error("Error in saving intents", e)
-                }
-            }
-
-            function addTranscriptToUser() {
-                try {
-                    const obj = {}
-                    obj[filename] = file
-                    obj["intents"] = intentsForThisFile
-                    user.transcripts = user.transcripts.concat(obj)
-                    // await user.save()        See comments at bottom re: only one save
-                }
-                catch (e) {
-                    throw new Error("Error in saving transcripts", e)
-                }
-            }
-        } catch (e) {
-            throw new Error("Invalid file format")
         }
     }
 }
 
-module.exports = uploadTranscriptInteractor
+module.exports = transcriptUploadInteractor
